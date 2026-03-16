@@ -13,19 +13,14 @@ jobs:
       - name: 🚚 Checkout code
         uses: actions/checkout@v4
 
-      - name: 📂 Deploy to IONOS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+      - name: 📂 Deploy to IONOS via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          server-dir: ./
-          exclude: |
-            **/.git*
-            **/.git*/**
-            .github/**
-            CNAME
-            README.md
-            .ftp-deploy-sync-state.json
+          port: 22
+          local_path: './*'
+          remote_path: '/'
+          sftp_only: true
+          delete_remote_files: false
